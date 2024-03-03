@@ -4,6 +4,7 @@ import 'package:flame/components.dart';
 import 'package:flame_tiled/flame_tiled.dart';
 
 import '../pixel_adventure.dart';
+import 'collision_block.dart';
 import 'player.dart';
 
 class Level extends World with HasGameRef<PixelAdventure> {
@@ -11,6 +12,7 @@ class Level extends World with HasGameRef<PixelAdventure> {
   final Player player;
   Level({required this.levelName, required this.player});
   late TiledComponent level;
+  List<CollisionBlock> collisionBlocks = [];
 
   @override
   FutureOr<void> onLoad() async {
@@ -19,6 +21,7 @@ class Level extends World with HasGameRef<PixelAdventure> {
     add(level);
 
     _spawningObjects();
+    _addCollisions();
 
     return super.onLoad();
   }
@@ -40,5 +43,24 @@ class Level extends World with HasGameRef<PixelAdventure> {
         }
       }
     }
+  }
+
+  void _addCollisions() {
+    final collisionsLayer = level.tileMap.getLayer<ObjectGroup>('Collisions');
+
+    if (collisionsLayer != null) {
+      for (final collision in collisionsLayer.objects) {
+        switch (collision.class_) {
+          default:
+            final block = CollisionBlock(
+              position: Vector2(collision.x, collision.y),
+              size: Vector2(collision.width, collision.height),
+            );
+            collisionBlocks.add(block);
+            add(block);
+        }
+      }
+    }
+    player.collisionBlocks = collisionBlocks;
   }
 }
