@@ -1,17 +1,19 @@
 import 'dart:async';
 
 import 'package:flame/components.dart';
-import 'package:flame/events.dart';
 import 'package:flame/game.dart';
+import 'package:flame/input.dart';
 import 'package:flutter/painting.dart';
 
 import 'components/level.dart';
+import 'components/player.dart';
 
 class PixelAdventure extends FlameGame
     with HasKeyboardHandlerComponents, HasCollisionDetection {
   @override
   Color backgroundColor() => const Color(0xFF211F30);
   late CameraComponent cam;
+  Player player = Player(character: 'Mask Dude');
 
   List<String> levelNames = ['Level-01'];
   int currentLevelIndex = 0;
@@ -42,6 +44,7 @@ class PixelAdventure extends FlameGame
   void _loadLevel() {
     Future.delayed(const Duration(seconds: 1), () {
       Level world = Level(
+        player: player,
         levelName: levelNames[currentLevelIndex],
       );
 
