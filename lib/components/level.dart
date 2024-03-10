@@ -5,6 +5,7 @@ import 'package:flame_tiled/flame_tiled.dart';
 
 import '../pixel_adventure.dart';
 import 'background_tile.dart';
+import 'checkpoint.dart';
 import 'chicken.dart';
 import 'collision_block.dart';
 import 'fruit.dart';
@@ -76,6 +77,13 @@ class Level extends World with HasGameRef<PixelAdventure> {
               size: Vector2(spawnPoint.width, spawnPoint.height),
             );
             add(saw);
+            break;
+          case 'Checkpoint':
+            final checkpoint = Checkpoint(
+              position: Vector2(spawnPoint.x, spawnPoint.y),
+              size: Vector2(spawnPoint.width, spawnPoint.height),
+            );
+            add(checkpoint);
             break;
           case 'Chicken':
             final offNeg = spawnPoint.properties.getValue('offNeg');
