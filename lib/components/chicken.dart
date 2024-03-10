@@ -3,6 +3,7 @@ import 'dart:ui';
 
 import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
+import 'package:flame_audio/flame_audio.dart';
 
 import '../pixel_adventure.dart';
 import 'player.dart';
@@ -132,6 +133,9 @@ class Chicken extends SpriteAnimationGroupComponent
 
   void collidedWithPlayer() async {
     if (player.velocity.y > 0 && player.y + player.height > position.y) {
+      if (game.playSounds) {
+        FlameAudio.play('bounce.wav', volume: game.soundVolume);
+      }
       gotStomped = true;
       current = State.hit;
       player.velocity.y = -_bounceHeight;

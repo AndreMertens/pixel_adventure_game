@@ -1,8 +1,8 @@
 import 'dart:async';
 
 import 'package:flame/components.dart';
-import 'package:flame/events.dart';
 import 'package:flame/game.dart';
+import 'package:flame/input.dart';
 import 'package:flutter/painting.dart';
 
 import 'components/level.dart';
@@ -15,6 +15,8 @@ class PixelAdventure extends FlameGame
   late CameraComponent cam;
   Player player = Player(character: 'Mask Dude');
 
+  bool playSounds = true;
+  double soundVolume = 1.0;
   List<String> levelNames = ['Level-01'];
   int currentLevelIndex = 0;
 
