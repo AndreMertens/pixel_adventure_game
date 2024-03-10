@@ -51,6 +51,15 @@ class Level extends World with HasGameRef<PixelAdventure> {
     if (collisionsLayer != null) {
       for (final collision in collisionsLayer.objects) {
         switch (collision.class_) {
+          case 'Platform':
+            final platform = CollisionBlock(
+              position: Vector2(collision.x, collision.y),
+              size: Vector2(collision.width, collision.height),
+              isPlatform: true,
+            );
+            collisionBlocks.add(platform);
+            add(platform);
+            break;
           default:
             final block = CollisionBlock(
               position: Vector2(collision.x, collision.y),

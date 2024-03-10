@@ -169,16 +169,18 @@ class Player extends SpriteAnimationGroupComponent
 
   void _checkHorizontalCollisions() {
     for (final block in collisionBlocks) {
-      if (checkCollision(this, block)) {
-        if (velocity.x > 0) {
-          velocity.x = 0;
-          position.x = block.x - hitbox.offsetX - hitbox.width;
-          break;
-        }
-        if (velocity.x < 0) {
-          velocity.x = 0;
-          position.x = block.x + block.width + hitbox.width + hitbox.offsetX;
-          break;
+      if (!block.isPlatform) {
+        if (checkCollision(this, block)) {
+          if (velocity.x > 0) {
+            velocity.x = 0;
+            position.x = block.x - hitbox.offsetX - hitbox.width;
+            break;
+          }
+          if (velocity.x < 0) {
+            velocity.x = 0;
+            position.x = block.x + block.width + hitbox.width + hitbox.offsetX;
+            break;
+          }
         }
       }
     }
@@ -192,16 +194,27 @@ class Player extends SpriteAnimationGroupComponent
 
   void _checkVerticalCollisions() {
     for (final block in collisionBlocks) {
-      if (checkCollision(this, block)) {
-        if (velocity.y > 0) {
-          velocity.y = 0;
-          position.y = block.y - hitbox.height - hitbox.offsetY;
-          isOnGround = true;
-          break;
+      if (block.isPlatform) {
+        if (checkCollision(this, block)) {
+          if (velocity.y > 0) {
+            velocity.y = 0;
+            position.y = block.y - hitbox.height - hitbox.offsetY;
+            isOnGround = true;
+            break;
+          }
         }
-        if (velocity.y < 0) {
-          velocity.y = 0;
-          position.y = block.y + block.height - hitbox.offsetY;
+      } else {
+        if (checkCollision(this, block)) {
+          if (velocity.y > 0) {
+            velocity.y = 0;
+            position.y = block.y - hitbox.height - hitbox.offsetY;
+            isOnGround = true;
+            break;
+          }
+          if (velocity.y < 0) {
+            velocity.y = 0;
+            position.y = block.y + block.height - hitbox.offsetY;
+          }
         }
       }
     }
