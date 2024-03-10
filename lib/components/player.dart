@@ -7,6 +7,7 @@ import 'package:flutter/services.dart';
 import '../pixel_adventure.dart';
 import 'collision_block.dart';
 import 'custom_hitbox.dart';
+import 'fruit.dart';
 import 'utils.dart';
 
 enum PlayerState {
@@ -93,6 +94,16 @@ class Player extends SpriteAnimationGroupComponent
     hasJumped = keysPressed.contains(LogicalKeyboardKey.space);
 
     return super.onKeyEvent(event, keysPressed);
+  }
+
+  @override
+  void onCollisionStart(
+      Set<Vector2> intersectionPoints, PositionComponent other) {
+    if (other is Fruit) {
+      other.collidedWithPlayer();
+    }
+
+    super.onCollisionStart(intersectionPoints, other);
   }
 
   void _loadAllAnimations() {
