@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flame/components.dart';
 import 'package:flame_tiled/flame_tiled.dart';
+import 'package:pixel_adventure/components/turtle.dart';
 
 import '../pixel_adventure.dart';
 import 'background_tile.dart';
@@ -95,6 +96,13 @@ class Level extends World with HasGameRef<PixelAdventure> {
               offPos: offPos,
             );
             add(chicken);
+            break;
+          case 'Turtle':
+            final turtle = Turtle(
+              position: Vector2(spawnPoint.x, spawnPoint.y),
+              size: Vector2(spawnPoint.width, spawnPoint.height),
+            );
+            add(turtle);
             break;
           default:
             break;
