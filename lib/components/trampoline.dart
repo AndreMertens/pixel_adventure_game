@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
 import 'package:flame_audio/flame_audio.dart';
+import 'package:flutter/widgets.dart';
 
 import '../pixel_adventure.dart';
 import 'player.dart';
@@ -13,7 +14,7 @@ class Trampoline extends SpriteAnimationGroupComponent
     with HasGameRef<PixelAdventure>, CollisionCallbacks {
   static const stepTime = 0.05;
   static const tileSize = 16;
-  static const _bounceHeight = 2000.0;
+  static const _bounceHeight = 300.0;
   final textureSize = Vector2(28, 28);
 
   late final Player player;
@@ -67,10 +68,16 @@ class Trampoline extends SpriteAnimationGroupComponent
     if (game.playSounds) {
       FlameAudio.play('bounce.wav', volume: game.soundVolume);
     }
+    debugPrint("[collidedWithPlayer] Before: $current");
     current = State.jump;
+    debugPrint("[collidedWithPlayer - velocity] Before: ${player.velocity.y}");
+    player.setJumpForce(_bounceHeight);
     player.velocity.y = -_bounceHeight;
-
+    debugPrint(
+        "[collidedWithPlayer - velocity] After: ${player.velocity.y}, bounce height: ${_bounceHeight}");
+    //player.setJumpForce(260);
     await animationTicker?.completed;
     current = State.idle;
+    debugPrint("[collidedWithPlayer] After: $current");
   }
 }

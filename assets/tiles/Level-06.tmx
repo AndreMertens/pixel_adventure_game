@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.10.2" orientation="orthogonal" renderorder="right-down" width="46" height="29" tilewidth="16" tileheight="16" infinite="0" nextlayerid="4" nextobjectid="109">
+<map version="1.10" tiledversion="1.10.2" orientation="orthogonal" renderorder="right-down" width="46" height="29" tilewidth="16" tileheight="16" infinite="0" nextlayerid="5" nextobjectid="110">
  <tileset firstgid="1" source="Pixel Adventure.tsx"/>
  <layer id="1" name="Tile Layer 1" width="46" height="29">
   <data encoding="csv">

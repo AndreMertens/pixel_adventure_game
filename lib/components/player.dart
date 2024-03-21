@@ -44,7 +44,7 @@ class Player extends SpriteAnimationGroupComponent
   late final SpriteAnimation disappearingAnimation;
 
   final double _gravity = 9.8;
-  final double _jumpForce = 260;
+  double _jumpForce = 260;
   final double _terminalVelocity = 300;
   double horizontalMovement = 0;
   double moveSpeed = 100;
@@ -63,6 +63,10 @@ class Player extends SpriteAnimationGroupComponent
   );
   double fixedDeltaTime = 1 / 60;
   double accumulatedTime = 0;
+
+  setJumpForce(double jumpForce) {
+    _jumpForce = jumpForce;
+  }
 
   @override
   FutureOr<void> onLoad() {
