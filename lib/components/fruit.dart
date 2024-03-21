@@ -53,6 +53,7 @@ class Fruit extends SpriteAnimationComponent
   void collidedWithPlayer() async {
     if (!collected) {
       collected = true;
+      game.playerData.currentScore += 1;
       if (game.playSounds) {
         FlameAudio.play('collect_fruit.wav', volume: game.soundVolume);
       }

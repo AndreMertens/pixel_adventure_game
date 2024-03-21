@@ -12,6 +12,7 @@ import 'collision_block.dart';
 import 'fruit.dart';
 import 'player.dart';
 import 'saw.dart';
+import 'trampoline.dart';
 
 class Level extends World with HasGameRef<PixelAdventure> {
   final String levelName;
@@ -78,6 +79,13 @@ class Level extends World with HasGameRef<PixelAdventure> {
               size: Vector2(spawnPoint.width, spawnPoint.height),
             );
             add(saw);
+            break;
+          case 'Trampoline':
+            final trampoline = Trampoline(
+              position: Vector2(spawnPoint.x, spawnPoint.y),
+              size: Vector2(spawnPoint.width, spawnPoint.height),
+            );
+            add(trampoline);
             break;
           case 'Checkpoint':
             final checkpoint = Checkpoint(

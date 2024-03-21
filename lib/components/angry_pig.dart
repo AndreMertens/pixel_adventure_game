@@ -8,13 +8,13 @@ import 'package:flame_audio/flame_audio.dart';
 import '../pixel_adventure.dart';
 import 'player.dart';
 
-enum State { idle, run, hit }
+enum State { idle, run, hit, walk }
 
-class Chicken extends SpriteAnimationGroupComponent
+class AngryPig extends SpriteAnimationGroupComponent
     with HasGameRef<PixelAdventure>, CollisionCallbacks {
   final double offNeg;
   final double offPos;
-  Chicken({
+  AngryPig({
     super.position,
     super.size,
     this.offNeg = 0,
@@ -36,6 +36,7 @@ class Chicken extends SpriteAnimationGroupComponent
 
   late final Player player;
   late final SpriteAnimation _idleAnimation;
+  late final SpriteAnimation _walkAnimation;
   late final SpriteAnimation _runAnimation;
   late final SpriteAnimation _hitAnimation;
 
@@ -67,7 +68,8 @@ class Chicken extends SpriteAnimationGroupComponent
   void _loadAllAnimations() {
     _idleAnimation = _spriteAnimation('Idle', 13);
     _runAnimation = _spriteAnimation('Run', 14);
-    _hitAnimation = _spriteAnimation('Hit', 15)..loop = false;
+    _walkAnimation = _spriteAnimation('Walk', 14);
+    _hitAnimation = _spriteAnimation('Hit 1', 15)..loop = false;
 
     animations = {
       State.idle: _idleAnimation,
@@ -80,7 +82,7 @@ class Chicken extends SpriteAnimationGroupComponent
 
   SpriteAnimation _spriteAnimation(String state, int amount) {
     return SpriteAnimation.fromFrameData(
-      game.images.fromCache('Enemies/Chicken/$state (32x34).png'),
+      game.images.fromCache('Enemies/AngryPig/$state (32x34).png'),
       SpriteAnimationData.sequenced(
         amount: amount,
         stepTime: stepTime,
@@ -133,11 +135,11 @@ class Chicken extends SpriteAnimationGroupComponent
 
   void collidedWithPlayer() async {
     if (player.velocity.y > 0 && player.y + player.height > position.y) {
-      game.playerData.currentScore += 5;
       if (game.playSounds) {
         FlameAudio.play('bounce.wav', volume: game.soundVolume);
       }
       gotStomped = true;
+
       current = State.hit;
       player.velocity.y = -_bounceHeight;
       await animationTicker?.completed;

@@ -4,6 +4,7 @@ import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
 import 'package:flame_audio/flame_audio.dart';
 import 'package:flutter/services.dart';
+import 'package:pixel_adventure/components/trampoline.dart';
 import 'package:pixel_adventure/components/turtle.dart';
 
 import '../pixel_adventure.dart';
@@ -127,6 +128,9 @@ class Player extends SpriteAnimationGroupComponent
         _reachedCheckpoint();
       }
       if (other is Turtle) {
+        other.collidedWithPlayer();
+      }
+      if (other is Trampoline) {
         other.collidedWithPlayer();
       }
     }

@@ -4,15 +4,19 @@ import 'package:flame/components.dart';
 import 'package:flame/game.dart';
 import 'package:flame/input.dart';
 import 'package:flutter/painting.dart';
+import 'package:pixel_adventure/components/victory_screen.dart';
 
+import 'components/hud.dart';
 import 'components/level.dart';
 import 'components/player.dart';
+import 'components/player_data.dart';
 
 class PixelAdventure extends FlameGame
     with HasKeyboardHandlerComponents, HasCollisionDetection {
   @override
   Color backgroundColor() => const Color(0xFF211F30);
   late CameraComponent cam;
+  PlayerData playerData = PlayerData();
   Player player = Player(character: 'Mask Dude');
 
   bool playSounds = true;
@@ -23,6 +27,7 @@ class PixelAdventure extends FlameGame
     'Level-03',
     'Level-04',
     'Level-05',
+    'Level-06',
   ];
   int currentLevelIndex = 0;
 
@@ -43,9 +48,9 @@ class PixelAdventure extends FlameGame
       currentLevelIndex++;
       _loadLevel();
     } else {
-      // no more levels
-      currentLevelIndex = 0;
-      _loadLevel();
+      overlays.add(VictoryScreen.id);
+      overlays.remove(Hud.id);
+      pauseEngine();
     }
   }
 
@@ -58,12 +63,13 @@ class PixelAdventure extends FlameGame
 
       cam = CameraComponent.withFixedResolution(
         world: world,
-        width: 640,
-        height: 360,
+        width: 736,
+        height: 464,
       );
       cam.viewfinder.anchor = Anchor.topLeft;
 
       addAll([cam, world]);
+      overlays.add(Hud.id);
     });
   }
 }
